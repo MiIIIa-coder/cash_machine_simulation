@@ -1,4 +1,4 @@
-#include "people.h"
+#include "../hdr/people.hpp"
 
 namespace peop {
 
@@ -25,11 +25,13 @@ namespace peop {
     bool people::want_interection(int& sec_per_user) const {
         std::random_device rd;
         std::mt19937 gen(rd());
-        std::uniform_int_distribution<int> dist(0, RAND_MAX);
-        return (dist(gen)*sec_per_user/RAND_MAX < 1);
+        std::uniform_int_distribution<int> dist(0, 1000);
+        double prob = dist(gen)*sec_per_user/double(1000);
+        std::cout << "probabil = " << prob << std::endl;
+        return (prob < 1);
     }
 
-    int money_quantity_action(int& const max_money) {
+    int money_quantity_action(int& max_money) {
         std::random_device rd;
         std::mt19937 gen(rd());
         std::uniform_int_distribution<int> dist(0, max_money);

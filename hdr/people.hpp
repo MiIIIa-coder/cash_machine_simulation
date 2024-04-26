@@ -1,10 +1,11 @@
 #ifndef people_h
 #define people_h
 
+#include <iostream>
 #include <random>
 
-#include "simualtion.hpp"
-#include "cash_machine.h"
+//#include "simualtion.hpp"
+//#include "cash_machine.h"
 
 namespace peop {
 
@@ -62,7 +63,7 @@ namespace peop {
 
    };
 
-   int money_quantity_action(int& const max_money);
+   int money_quantity_action(int& max_money);
 
 }
 

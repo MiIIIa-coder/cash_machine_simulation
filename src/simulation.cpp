@@ -1,29 +1,32 @@
-#include "simualtion.hpp"
+#include "../hdr/simulation.hpp"
 
 namespace sim {
     void simulation::initial() {
 
         int index = 0;
+        int offset = 0;
 
         //PEOPLE
         population.reserve(all_people_);
         for (; index < all_people_ * percent_adult_/100; ++index) {
-
             population.push_back(std::make_unique<peop::adult>());
             population.back()->init_person(delay_deposit_ad_, delay_withdraw_ad_, sec_per_user_ad_, max_money_ad_);
         }
+        offset += index;
 
-        for (; index < all_people_ * percent_homeless_/100; ++index) {
+        for (; index < offset + all_people_ * percent_homeless_/100; ++index) {
             population.push_back(std::make_unique<peop::homeless>());
             population.back()->init_person(delay_deposit_ad_, delay_withdraw_ad_, sec_per_user_ad_, max_money_ad_);
         }
+        offset += index;
 
-        for (; index < all_people_ * percent_senior_/100; ++index) {
+        for (; index < offset + all_people_ * percent_senior_/100; ++index) {
             population.push_back(std::make_unique<peop::senior>());
             population.back()->init_person(delay_deposit_ad_, delay_withdraw_ad_, sec_per_user_ad_, max_money_ad_);
         }
+        offset += index;
 
-        for (; index < all_people_ * percent_child_/100; ++index) {
+        for (; index < offset + all_people_ * percent_child_/100; ++index) {
             population.push_back(std::make_unique<peop::child>());
             population.back()->init_person(delay_deposit_ad_, delay_withdraw_ad_, sec_per_user_ad_, max_money_ad_);
         }
@@ -39,7 +42,7 @@ namespace sim {
 
     }
 
-    bool simulation::push_in_queue(int& const person_idx) {
+    bool simulation::push_in_queue(int& person_idx) {
         std::vector<int> vctr_size_queues {number_cash_m_};
 
         //FIND MIN QUEUE
@@ -55,7 +58,7 @@ namespace sim {
         //ADDING IN MIN QUEUE
         for (int index = 0; index < number_cash_m_; ++index) {
             if (vctr_size_queues[index] == min_size)
-                set_cash_m[index]->add_in_queue(population[person_idx]);
+                set_cash_m[index]->add_in_queue(population[person_idx].get());
         }   
 
         return true;  
