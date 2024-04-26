@@ -24,7 +24,15 @@ namespace cash_m {
 
          std::size_t  get_size_queue() const { return queue_.size(); }
          void add_in_queue(peop::people* person) { queue_.push(person); }
-      
+
+         // void interection() {
+         // pass
+         // }
+
+      private:
+         bool new_interect;
+         int time_interect;
+
    };
 
 }

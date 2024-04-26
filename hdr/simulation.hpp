@@ -38,6 +38,7 @@ namespace sim {
             int  get_max_size_queue() const { return max_size_queue_;}  //ret from user's settings value, not max_size in all queues
 
             bool push_in_queue(int& person_idx);
+            void update_cash_m();  //pass
 
             std::vector<std::unique_ptr<peop::people>> population;
             std::vector<std::unique_ptr<cash_m::cash_machine>> set_cash_m;

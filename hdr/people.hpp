@@ -29,8 +29,6 @@ namespace peop {
          }
 
          bool is_in_queue () const { return in_queue; }
-         void add_in_queue_deposit (int& money_dep);
-         void add_in_queue_withdraw(int& money_wit);
       
       private:
          bool in_queue;

@@ -25,9 +25,9 @@ namespace peop {
     bool people::want_interection(int& sec_per_user) const {
         std::random_device rd;
         std::mt19937 gen(rd());
-        std::uniform_int_distribution<int> dist(0, 1000);
-        double prob = dist(gen)*sec_per_user/double(1000);
-        std::cout << "probabil = " << prob << std::endl;
+        std::uniform_int_distribution<int> dist(0, 10000);
+        double prob = dist(gen)*sec_per_user/double(10000);
+        //std::cout << "probabil = " << prob << std::endl;
         return (prob < 1);
     }
 

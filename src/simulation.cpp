@@ -43,7 +43,7 @@ namespace sim {
     }
 
     bool simulation::push_in_queue(int& person_idx) {
-        std::vector<int> vctr_size_queues {number_cash_m_};
+        std::vector<int> vctr_size_queues(number_cash_m_);
 
         //FIND MIN QUEUE
         for (int index = 0; index < number_cash_m_; ++index) {
@@ -52,16 +52,26 @@ namespace sim {
 
         int min_size = *(std::min_element(vctr_size_queues.begin(), vctr_size_queues.end()));
 
-        if (min_size > get_max_size_queue()) 
+        if (min_size >= get_max_size_queue()) 
             return false;
 
+        std::cout << "min_size of queues = " << min_size << std::endl;
         //ADDING IN MIN QUEUE
         for (int index = 0; index < number_cash_m_; ++index) {
-            if (vctr_size_queues[index] == min_size)
+            if (vctr_size_queues[index] == min_size) {
+                //std::cout << "add in queue #" << index << " person #" << person_idx << std::endl;
                 set_cash_m[index]->add_in_queue(population[person_idx].get());
+                break;
+            }
         }   
 
         return true;  
     }
+
+    // void simulation::update_cash_m() {
+    //     for (int index = 0; index < number_cash_m_; ++index) {
+    //         set_cash_m[index]->
+    //     }
+    // }
 
 }
