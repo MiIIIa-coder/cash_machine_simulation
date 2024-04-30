@@ -2,6 +2,18 @@
 
 namespace peop {
 
+    void people::init_person(int& deposit, int& withdraw, int& sec_per_usr, int& max_money_user) {
+        in_queue = false;
+        happyness = 100;
+        delay_deposit = deposit;
+        delay_withdraw = withdraw;
+        sec_per_user = sec_per_usr;
+        max_money = max_money_user;
+
+        deposit_interect  = false;
+        withdraw_interect = false;
+    }
+
     bool people::deposit() {
         if (want_interection(sec_per_user)) {
             deposit_interect = true;
@@ -15,7 +27,7 @@ namespace peop {
     bool people::withdraw() {
         if (want_interection(sec_per_user)) {
             withdraw_interect = true;
-            money_withdraw = money_quantity_action(max_money);
+            money_withdraw = (-1)*money_quantity_action(max_money);
             in_queue = true;
             return true;
         }
@@ -36,6 +48,48 @@ namespace peop {
         std::mt19937 gen(rd());
         std::uniform_int_distribution<int> dist(0, max_money);
         return dist(gen);
+    }
+
+    interection_type people::interection(int& delay, int& money) {
+        if (deposit_interect) {
+            delay = delay_deposit;
+            money = money_deposit;
+            deposit_interect = false;
+            return DEPOSIT;
+        } 
+
+        if (withdraw_interect) {
+            delay = delay_withdraw;
+            money = money_withdraw;
+            withdraw_interect = false;
+            return WITHDRAW;
+        } 
+
+        delay = -1; 
+        money = 0;
+        return NOP;
+    }
+
+    void people::cancel_c_m(interection_type inter) {  //for c_m
+        switch (inter)
+        {
+        case DEPOSIT:
+            deposit_interect = true;
+            break;
+
+        case WITHDRAW:
+            withdraw_interect = true;
+            break;
+        
+        default:
+            break;
+        }
+    }
+
+    void people::cancel_in_queue() {
+        in_queue = false;
+        deposit_interect  = false;
+        withdraw_interect = false;
     }
 
 }

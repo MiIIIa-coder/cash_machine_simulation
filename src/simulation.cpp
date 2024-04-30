@@ -37,17 +37,18 @@ namespace sim {
         set_cash_m.reserve(number_cash_m_);
         for (; index < number_cash_m_; ++index) {
             set_cash_m.push_back(std::make_unique<cash_m::cash_machine>());
-            set_cash_m.back()->init_cash_m(initial_money_c_m_, max_size_queue_);
+            set_cash_m.back()->init_cash_m(initial_money_c_m_, max_size_queue_, work_ability_);
         }
 
     }
 
-    bool simulation::push_in_queue(int& person_idx) {
+    bool simulation::push_in_queue(peop::people* person) {
         std::vector<int> vctr_size_queues(number_cash_m_);
 
         //FIND MIN QUEUE
         for (int index = 0; index < number_cash_m_; ++index) {
-            vctr_size_queues[index] = set_cash_m[index]->get_size_queue();
+            if (set_cash_m[index]->is_work())
+                vctr_size_queues[index] = set_cash_m[index]->get_size_queue();
         }
 
         int min_size = *(std::min_element(vctr_size_queues.begin(), vctr_size_queues.end()));
@@ -55,12 +56,12 @@ namespace sim {
         if (min_size >= get_max_size_queue()) 
             return false;
 
-        std::cout << "min_size of queues = " << min_size << std::endl;
+        std::cout << "min_size of queues = " << min_size;// << std::endl;
         //ADDING IN MIN QUEUE
         for (int index = 0; index < number_cash_m_; ++index) {
-            if (vctr_size_queues[index] == min_size) {
-                //std::cout << "add in queue #" << index << " person #" << person_idx << std::endl;
-                set_cash_m[index]->add_in_queue(population[person_idx].get());
+            if (set_cash_m[index]->is_work() && vctr_size_queues[index] == min_size) {
+                std::cout << "  add in queue #" << index << std::endl;
+                set_cash_m[index]->add_in_queue(person);
                 break;
             }
         }   
@@ -68,10 +69,15 @@ namespace sim {
         return true;  
     }
 
-    // void simulation::update_cash_m() {
-    //     for (int index = 0; index < number_cash_m_; ++index) {
-    //         set_cash_m[index]->
-    //     }
-    // }
+    void simulation::cash_m_broke(int& index_c_m) {
+        while (set_cash_m[index_c_m]->get_size_queue() != 0) {
+            peop::people* first_pers = const_cast<peop::people*>(set_cash_m[index_c_m]->get_front());
+            std::cout << "BEGIN REQUEUE!" << std::endl;
+            if (!(push_in_queue(first_pers))) {
+                first_pers->cancel_in_queue();
+            }
+            set_cash_m[index_c_m]->pop_front();
+        }
+    }
 
 }

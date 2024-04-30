@@ -9,6 +9,8 @@
 
 namespace peop {
 
+   enum interection_type {NOP, DEPOSIT, WITHDRAW}; 
+
    class people {
       public:
          
@@ -16,24 +18,25 @@ namespace peop {
          virtual bool withdraw();
          bool want_interection(int& sec_per_user) const;  //sec_per_user - time in seconds for one user of cash machine on averadge
 
-         void init_person(int& deposit, int& withdraw, int& sec_per_usr, int& max_money_user) {
-            in_queue = false;
-            happyness = 100;
-            dealy_deposit = deposit;
-            delay_withdraw = withdraw;
-            sec_per_user = sec_per_usr;
-            max_money = max_money_user;
+         void init_person(int& deposit, int& withdraw, int& sec_per_usr, int& max_money_user);
 
-            deposit_interect  = false;
-            withdraw_interect = false;
-         }
-
+      public:
          bool is_in_queue () const { return in_queue; }
-      
+         int get_delay_deposit()  { return delay_deposit; }
+         int get_money_deposit()  { return money_deposit; }
+         int get_delay_withdraw() { return delay_withdraw; }
+         int get_money_withdraw() { return money_withdraw; }
+         bool  is_deposit_inter() { return deposit_interect; }
+         bool is_withdraw_inter() { return withdraw_interect; }
+
+         interection_type interection(int& delay, int& money);
+         void cancel_c_m(interection_type inter);
+         void cancel_in_queue();
+
       private:
          bool in_queue;
          int  happyness;
-         int  dealy_deposit;    //time in cach mashine
+         int  delay_deposit;    //time in cach mashine
          int  delay_withdraw;   //time in cach mashine
          int  sec_per_user;
          int  max_money;

@@ -1,4 +1,4 @@
-OBJECTS = src/main.o src/simulation.o src/people.o
+OBJECTS = src/main.o src/simulation.o src/people.o src/cash_machine.o
 HEADERS = hdr/simulation.hpp hdr/people.hpp hdr/cash_machine.hpp
 CC = g++
 CFLAGS = -Wall
