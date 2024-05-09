@@ -33,12 +33,11 @@ namespace cash_m {
             balance += money;
             work_ability -= 1;
 
-            if (balance < 0) {
+            if (balance < 0) {     //return before clk
                 balance -= money;
                 new_interect = true;
                 time_end_interect = clk_time;
                 queue_.front()->cancel_c_m(inter_type);
-                queue_.pop();
                 return LACK_MONEY;
             }
         }

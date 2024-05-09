@@ -2,16 +2,18 @@
 
 namespace peop {
 
-    void people::init_person(int& deposit, int& withdraw, int& sec_per_usr, int& max_money_user) {
+    void people::init_person(int& deposit, int& withdraw, int& sec_per_usr, int& max_money_user, int& max_attemts_user) {
         in_queue = false;
         happyness = 100;
         delay_deposit = deposit;
         delay_withdraw = withdraw;
         sec_per_user = sec_per_usr;
         max_money = max_money_user;
+        max_attemts = max_attemts_user;
 
         deposit_interect  = false;
         withdraw_interect = false;
+        attemts = 0;
     }
 
     bool people::deposit() {
@@ -48,6 +50,10 @@ namespace peop {
         std::mt19937 gen(rd());
         std::uniform_int_distribution<int> dist(0, max_money);
         return dist(gen);
+    }
+
+    void people::failed_attemt() {
+        attemts += 1;
     }
 
     interection_type people::interection(int& delay, int& money) {
@@ -88,6 +94,7 @@ namespace peop {
 
     void people::cancel_in_queue() {
         in_queue = false;
+        attemts = 0;
         deposit_interect  = false;
         withdraw_interect = false;
     }
