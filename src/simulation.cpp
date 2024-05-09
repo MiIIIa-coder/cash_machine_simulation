@@ -56,12 +56,11 @@ namespace sim {
         if (min_size >= get_max_size_queue()) 
             return false;
 
-        std::cout << "min_size of queues = " << min_size;// << std::endl;
         //ADDING IN MIN QUEUE
         for (int index = 0; index < number_cash_m_; ++index) {
             if (set_cash_m[index]->is_work() && vctr_size_queues[index] == min_size) {
-                std::cout << "  add in queue #" << index << std::endl;
                 set_cash_m[index]->add_in_queue(person);
+                person->increment_queue_count();
                 break;
             }
         }   
@@ -83,11 +82,9 @@ namespace sim {
         if (min_size >= get_max_size_queue()) 
             return false;
 
-        std::cout << "min_size of queues = " << min_size;// << std::endl;
         //ADDING IN MIN QUEUE
         for (int index = 0; index < number_cash_m_; ++index) {
             if (set_cash_m[index]->is_work() && index != index_c_m && vctr_size_queues[index] == min_size) {
-                std::cout << "  add in queue #" << index << std::endl;
                 set_cash_m[index]->add_in_queue(person);
                 break;
             }

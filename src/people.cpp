@@ -4,6 +4,8 @@ namespace peop {
 
     void people::init_person(int& deposit, int& withdraw, int& sec_per_usr, int& max_money_user, int& max_attemts_user) {
         in_queue = false;
+        in_queue_count = 0;
+        time_queued_in = 0;
         happyness = 100;
         delay_deposit = deposit;
         delay_withdraw = withdraw;
@@ -94,7 +96,7 @@ namespace peop {
 
     void people::cancel_in_queue() {
         in_queue = false;
-        attemts = 0;
+        attemts  = 0;
         deposit_interect  = false;
         withdraw_interect = false;
     }

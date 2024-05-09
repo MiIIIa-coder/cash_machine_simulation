@@ -22,10 +22,10 @@ namespace cash_m {
 
         if (new_interect && !(queue_.empty())) {
             inter_type = queue_.front()->interection(delay, money);
-            std::cout << "DELAY = " << delay << " MONEY = " << money << std::endl;
+            //std::cout << "DELAY = " << delay << " MONEY = " << money << std::endl;
             if (inter_type == peop::NOP) {
-                std::cout << "POPA" << std::endl;
-                { queue_.pop(); }
+                queue_.front()->cancel_in_queue();
+                queue_.pop();
                 return IN_SERVICE; 
             }
             new_interect = false;
@@ -43,7 +43,7 @@ namespace cash_m {
         }
 
         if (work_ability == 0) {
-            std::cout << "ATM IS DEAD" << std::endl;
+            //std::cout << "ATM IS DEAD" << std::endl;
             broke = true;
             return BR_DOWN;
         }

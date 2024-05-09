@@ -17,6 +17,9 @@ namespace sim {
             int delay_deposit_ad_, delay_withdraw_ad_, sec_per_user_ad_, max_money_ad_;
             int max_attemts_;
 
+            std::vector<int> time_service;
+
+
         public:
             //int -> double
             simulation(
