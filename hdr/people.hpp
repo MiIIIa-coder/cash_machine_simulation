@@ -42,6 +42,8 @@ namespace peop {
          int  get_queue_count()    const {return in_queue_count;  }
          void set_time_queued_in(int time) { time_queued_in = time; }
 
+         void print_dep_inter() const { std::cout << deposit_interect << std::endl; }
+
 
       private:
          bool in_queue;

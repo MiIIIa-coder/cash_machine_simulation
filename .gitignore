@@ -1,3 +1,6 @@
 *.o
 cash_machine
 .Makefile.swp
+plot.cpp
+log.txt
+src/log.txt

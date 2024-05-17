@@ -21,13 +21,26 @@ namespace cash_m {
         //std::cout << "DELAY = " << delay << " MONEY = " << money << std::endl;
 
         if (new_interect && !(queue_.empty())) {
+
+            //std::cout << "preinterection " << std::endl;
+
+            //std::cout << queue_.size() << std::endl;
+            //queue_.front()->print_dep_inter();
+
+            //std::cout << "after queuefront " << std::endl;
             inter_type = queue_.front()->interection(delay, money);
-            //std::cout << "DELAY = " << delay << " MONEY = " << money << std::endl;
+            
+            //<< "postinterection DELAY = " << delay << " MONEY = " << money << std::endl;
+            
             if (inter_type == peop::NOP) {
                 queue_.front()->cancel_in_queue();
+                //std::cout << "POP IN SERVICE" << std::endl;
                 queue_.pop();
                 return IN_SERVICE; 
             }
+
+            //std::cout << " fourth DELAY = " << delay << " MONEY = " << money << std::endl;
+
             new_interect = false;
             time_end_interect = clk_time + delay;
             balance += money;
@@ -43,14 +56,14 @@ namespace cash_m {
         }
 
         if (work_ability == 0) {
-            //std::cout << "ATM IS DEAD" << std::endl;
+            std::cout << "ATM IS DEAD" << std::endl;
             broke = true;
             return BR_DOWN;
         }
 
-        if (clk_time != (time_end_interect-1))
-            return IN_SERVICE;
-        new_interect = true;
+        if (clk_time == (time_end_interect-1))
+            new_interect = true;
+        
 
         return IN_SERVICE;
     }

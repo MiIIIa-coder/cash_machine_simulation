@@ -43,7 +43,6 @@ namespace peop {
         std::mt19937 gen(rd());
         std::uniform_int_distribution<int> dist(0, 10000);
         double prob = dist(gen)*sec_per_user/double(10000);
-        //std::cout << "probabil = " << prob << std::endl;
         return (prob < 1);
     }
 
@@ -59,12 +58,20 @@ namespace peop {
     }
 
     interection_type people::interection(int& delay, int& money) {
+
+        //std::cout << "in interection" << std::endl;
+
         if (deposit_interect) {
+
+            //std::cout << "in deposit_interection" << std::endl;
+
             delay = delay_deposit;
             money = money_deposit;
             deposit_interect = false;
             return DEPOSIT;
         } 
+
+        //std::cout << "in interection after deposit" << std::endl;
 
         if (withdraw_interect) {
             delay = delay_withdraw;
@@ -73,12 +80,17 @@ namespace peop {
             return WITHDRAW;
         } 
 
+        //std::cout << "in interection after withdraw" << std::endl;
+
         delay = -1; 
         money = 0;
         return NOP;
     }
 
     void people::cancel_c_m(interection_type inter) {  //for c_m
+
+        //std::cout << "cancel_c_m" << std::endl;
+
         switch (inter)
         {
         case DEPOSIT:
@@ -95,6 +107,9 @@ namespace peop {
     }
 
     void people::cancel_in_queue() {
+
+        //std::cout << "cancel_in_queue" << std::endl;
+
         in_queue = false;
         attemts  = 0;
         deposit_interect  = false;
